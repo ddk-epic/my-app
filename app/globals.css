@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #FFFFFF;
+  --color-background: #ffffff;
   --color-foreground: #171717;
-  --color-highlight: #00ADB5;
-  --color-primary: #EEEEEE;
-  --color-secondary: #393E46;
+  --color-highlight: #00adb5;
+  --color-highlight-2: bg-orange-300;
+  --color-primary: #eeeeee;
+  --color-secondary: #393e46;
 }
 
 :root {
@@ -17,4 +18,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar:horizontal {
+  height: 12px;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-orange-300 rounded-xl;
 }
