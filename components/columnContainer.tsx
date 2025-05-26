@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import { Column, Id } from "@/types";
+import { Column, Id, Task } from "@/types";
 import TrashIcon from "./trashIcon";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import PlusIcon from "./plusIcon";
+import TaskCard from "./card";
 
 interface ColumnContainerProps {
   column: Column;
   deleteColumn: (id: Id) => void;
   updateColumn: (id: Id, title: string) => void;
+  createTask: (columnId: Id) => void;
+  tasks: Task[];
 }
 
 function ColumnContainer(props: ColumnContainerProps) {
-  const { column, deleteColumn, updateColumn } = props;
+  const { column, deleteColumn, updateColumn, createTask, tasks } = props;
   const [editMode, setEditMode] = useState(false);
   const {
     setNodeRef,
@@ -38,7 +42,7 @@ function ColumnContainer(props: ColumnContainerProps) {
       <div
         ref={setNodeRef}
         style={style}
-        className="bg-primary min-w-[350px] h-[600px] opacity-80 border-4 border-highlight rounded-md flex flex-col"
+        className="bg-primary w-[350px] h-[600px] opacity-80 border-4 border-highlight rounded-md flex flex-col"
       ></div>
     );
   }
@@ -47,14 +51,14 @@ function ColumnContainer(props: ColumnContainerProps) {
     <div
       ref={setNodeRef}
       style={style}
-      className="bg-primary min-w-[350px] h-[600px] rounded-md flex flex-col"
+      className="bg-primary w-[350px] h-[600px] rounded-md flex flex-col"
     >
       {/* Column Title */}
       <div
         {...attributes}
         {...listeners}
         onClick={() => setEditMode(true)}
-        className="bg-highlight h-[50px] flex items-center justify-between px-2 text-primary font-bold rounded-t-md"
+        className="bg-highlight h-[50px] min-h-[50px] flex items-center justify-between px-2 text-primary font-bold rounded-t-md"
       >
         <div className="flex gap-2">
           <div className="flex justify-center items-center bg-primary !text-secondary px-2 py-0.5 text-sm rounded-full">
@@ -83,9 +87,16 @@ function ColumnContainer(props: ColumnContainerProps) {
         </button>
       </div>
       {/* Column Content */}
-      <div className="flex flex-grow pl-2 text-md">Content</div>
+      <div className="flex flex-grow flex-col gap-4 p-2 text-md overflow-x-hidden overflow-y-auto">
+        {tasks.map((task) => (
+          <TaskCard task={task} />
+        ))}
+      </div>
       {/* Column Footer */}
-      <div className="flex items-center pl-2 pb-1 text-md">Footer</div>
+      <div className="h-[50px] flex items-center gap-2 p-2 text-md rounded-b-md hover:bg-highlight hover:text-primary">
+        <PlusIcon />
+        <button onClick={() => createTask(column.id)}>Add Task</button>
+      </div>
     </div>
   );
 }

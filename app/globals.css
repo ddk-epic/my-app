@@ -4,7 +4,6 @@
   --color-background: #ffffff;
   --color-foreground: #171717;
   --color-highlight: #00adb5;
-  --color-highlight-2: bg-orange-300;
   --color-primary: #eeeeee;
   --color-secondary: #393e46;
 }
@@ -21,7 +20,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 8px;
 }
 ::-webkit-scrollbar:horizontal {
   height: 12px;
