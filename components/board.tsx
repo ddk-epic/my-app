@@ -15,6 +15,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
+import ColumnContainerOverlay from "./columnContainerOverlay";
 
 function generateId() {
   return Math.floor(Math.random() * 10000) + 1;
@@ -114,18 +115,13 @@ function KanbanBoard() {
             <PlusIcon /> Add Column
           </button>
         </div>
-        {/* create Portal renders this Overlay into a different part of the DOM */}
+        {/* Portal renders the Overlay into a different part of the DOM */}
         {createPortal(
           <DragOverlay>
             {activeColumn && (
-              <ColumnContainer
+              <ColumnContainerOverlay
                 column={activeColumn}
-                deleteColumn={deleteColumn}
-                updateColumn={updateColumn}
-                createTask={createTask}
-                tasks={tasks.filter(
-                  (task) => task.columnId === activeColumn.id
-                )}
+                tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
               />
             )}
           </DragOverlay>,
