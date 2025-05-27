@@ -1,5 +1,5 @@
 import React from "react";
-import { Column, Task } from "@/types";
+import { Column, Id, Task } from "@/types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import PlusIcon from "./plusIcon";
@@ -9,10 +9,12 @@ import TaskCard from "./card";
 interface ColumnContainerOverlayProps {
   column: Column;
   tasks: Task[];
+  deleteTask: (columnId: Id) => void;
+  updateTask: (id: Id, content: string) => void;
 }
 
 function ColumnContainerOverlay(props: ColumnContainerOverlayProps) {
-  const { column, tasks } = props;
+  const { column, tasks, deleteTask, updateTask } = props;
   const { setNodeRef, transform, transition } = useSortable({
     id: column.id,
     data: {
@@ -46,7 +48,12 @@ function ColumnContainerOverlay(props: ColumnContainerOverlayProps) {
       {/* Column Content */}
       <div className="flex flex-grow flex-col gap-4 p-2 text-md overflow-x-hidden overflow-y-auto">
         {tasks.map((task) => (
-          <TaskCard task={task} />
+          <TaskCard
+            key={task.id}
+            task={task}
+            deleteTask={deleteTask}
+            updateTask={updateTask}
+          />
         ))}
       </div>
       {/* Column Footer */}
