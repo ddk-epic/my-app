@@ -44,8 +44,6 @@ function TaskCard(props: TaskCardProps) {
       <div
         ref={setNodeRef}
         style={style}
-        {...attributes}
-        {...listeners}
         className="relative bg-white h-[100px] min-h-[100px] flex items-center p-2 text-left rounded hover:ring-2 hover:ring-inset hover:ring-highlight cursor-grab"
       >
         <textarea

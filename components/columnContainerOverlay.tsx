@@ -4,17 +4,16 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import PlusIcon from "./plusIcon";
 import TrashIcon from "./trashIcon";
-import TaskCard from "./card";
+import TaskCard from "./task";
+import TaskCardOverlay from "./taskOverlay";
 
 interface ColumnContainerOverlayProps {
   column: Column;
   tasks: Task[];
-  deleteTask: (columnId: Id) => void;
-  updateTask: (id: Id, content: string) => void;
 }
 
 function ColumnContainerOverlay(props: ColumnContainerOverlayProps) {
-  const { column, tasks, deleteTask, updateTask } = props;
+  const { column, tasks } = props;
   const { setNodeRef, transform, transition } = useSortable({
     id: column.id,
     data: {
@@ -48,12 +47,7 @@ function ColumnContainerOverlay(props: ColumnContainerOverlayProps) {
       {/* Column Content */}
       <div className="flex flex-grow flex-col gap-4 p-2 text-md overflow-x-hidden overflow-y-auto">
         {tasks.map((task) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            deleteTask={deleteTask}
-            updateTask={updateTask}
-          />
+          <TaskCardOverlay key={task.id} task={task} />
         ))}
       </div>
       {/* Column Footer */}

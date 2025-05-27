@@ -17,7 +17,8 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import ColumnContainerOverlay from "./columnContainerOverlay";
-import TaskCard from "./card";
+import TaskCard from "./task";
+import TaskCardOverlay from "./taskOverlay";
 
 function generateId() {
   return Math.floor(Math.random() * 10000) + 1;
@@ -183,20 +184,13 @@ function KanbanBoard() {
             {activeColumn && (
               <ColumnContainerOverlay
                 column={activeColumn}
-                deleteTask={deleteTask}
-                updateTask={updateTask}
                 tasks={tasks.filter(
                   (task) => task.columnId === activeColumn.id
                 )}
               />
             )}
             {activeTask && (
-              <TaskCard
-                key={activeTask.id}
-                task={activeTask}
-                deleteTask={deleteTask}
-                updateTask={updateTask}
-              />
+              <TaskCardOverlay key={activeTask.id} task={activeTask} />
             )}
           </DragOverlay>,
           document.body
