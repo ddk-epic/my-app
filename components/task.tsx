@@ -12,7 +12,6 @@ interface TaskCardProps {
 
 function TaskCard(props: TaskCardProps) {
   const { task, deleteTask, updateTask } = props;
-  const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const {
     setNodeRef,
@@ -36,7 +35,6 @@ function TaskCard(props: TaskCardProps) {
 
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
-    setMouseIsOver(false);
   };
 
   if (editMode)
@@ -73,21 +71,18 @@ function TaskCard(props: TaskCardProps) {
       {...attributes}
       {...listeners}
       onClick={toggleEditMode}
-      onMouseEnter={() => setMouseIsOver(true)}
-      onMouseLeave={() => setMouseIsOver(false)}
-      className="relative bg-white h-[100px] min-h-[100px] flex items-center p-2 text-left rounded hover:ring-1 hover:ring-inset hover:ring-highlight cursor-grab"
+      className="relative group bg-white h-[100px] min-h-[100px] flex items-center p-2 text-left rounded hover:ring-1 hover:ring-inset hover:ring-highlight cursor-grab"
     >
       <p className="h-[90%] w-full my-auto overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
         {task.content}
       </p>
-      {mouseIsOver && (
-        <button
-          onClick={() => deleteTask(task.id)}
-          className="absolute right-2 p-0.5 rounded opacity-60 hover:opacity-100"
-        >
-          <TrashIcon />
-        </button>
-      )}
+
+      <button
+        onClick={() => deleteTask(task.id)}
+        className="absolute right-2 p-0.5 rounded opacity-0 group-hover:opacity-60 hover:opacity-100 transition-opacity duration-150"
+      >
+        <TrashIcon />
+      </button>
     </div>
   );
 }
