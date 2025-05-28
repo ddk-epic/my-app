@@ -1,10 +1,9 @@
 import React from "react";
-import { Column, Id, Task } from "@/types";
+import { Column, Task } from "@/types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import PlusIcon from "./plusIcon";
 import TrashIcon from "./trashIcon";
-import TaskCard from "./task";
 import TaskCardOverlay from "./taskOverlay";
 
 interface ColumnContainerOverlayProps {

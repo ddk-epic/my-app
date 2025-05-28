@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { createPortal } from "react-dom";
 import { Column, Id, Task } from "@/types";
 import PlusIcon from "./plusIcon";
-import ColumnContainer from "./columnContainer";
 import {
   DndContext,
   DragEndEvent,
@@ -16,8 +14,8 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
+import ColumnContainer from "./columnContainer";
 import ColumnContainerOverlay from "./columnContainerOverlay";
-import TaskCard from "./task";
 import TaskCardOverlay from "./taskOverlay";
 
 function generateId() {
@@ -116,14 +114,14 @@ function KanbanBoard() {
     if (!over) return;
     if (active.id === over.id) return;
 
-    // task over task
     const isActiveTask = active.data.current?.type === "Task";
-    const isOverTask = over.data.current?.type === "Task";
-
     if (!isActiveTask) return;
 
+    // task over task
+    const isOverTask = over.data.current?.type === "Task";
+    if (!isOverTask) return;
     if (isActiveTask && isOverTask) {
-      setTasks((task) => {
+      setTasks(() => {
         const activeIndex = tasks.findIndex((task) => task.id === active.id);
         const overIndex = tasks.findIndex((task) => task.id === over.id);
 
@@ -134,9 +132,9 @@ function KanbanBoard() {
     }
     // task over column
     const isOverColumn = over.data.current?.type === "Column";
-
+    if (!isOverColumn) return;
     if (isActiveTask && isOverColumn) {
-      setTasks((task) => {
+      setTasks(() => {
         const activeIndex = tasks.findIndex((task) => task.id === active.id);
 
         tasks[activeIndex].columnId = over.id;
@@ -178,8 +176,8 @@ function KanbanBoard() {
             <PlusIcon /> Add Column
           </button>
         </div>
-        {/* Portal renders the Overlay into a different part of the DOM */}
-        {createPortal(
+        {/* --------------- Overlay --------------- */}
+        {
           <DragOverlay>
             {activeColumn && (
               <ColumnContainerOverlay
@@ -192,9 +190,8 @@ function KanbanBoard() {
             {activeTask && (
               <TaskCardOverlay key={activeTask.id} task={activeTask} />
             )}
-          </DragOverlay>,
-          document.body
-        )}
+          </DragOverlay>
+        }
       </DndContext>
     </div>
   );

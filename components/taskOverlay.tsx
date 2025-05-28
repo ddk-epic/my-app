@@ -1,6 +1,4 @@
-import { listeners } from "process";
 import React from "react";
-import task from "./task";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Task } from "@/types";
