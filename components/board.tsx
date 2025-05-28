@@ -15,8 +15,7 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import ColumnContainer from "./columnContainer";
-import ColumnContainerOverlay from "./columnContainerOverlay";
-import TaskCardOverlay from "./taskOverlay";
+import { ColumnContainerOverlay, TaskCardOverlay } from "./overlay";
 
 function generateId() {
   return Math.floor(Math.random() * 10000) + 1;
@@ -120,11 +119,11 @@ function KanbanBoard() {
     // task over task
     if (isOverTask) {
       setTasks((prev) => {
-        const updatedTasks = [...prev];
         const activeIndex = prev.findIndex((task) => task.id === active.id);
         const overIndex = prev.findIndex((task) => task.id === over.id);
         if (activeIndex === -1 || overIndex === -1) return prev;
 
+        const updatedTasks = [...prev];
         updatedTasks[activeIndex] = {
           ...updatedTasks[activeIndex],
           columnId: updatedTasks[overIndex].columnId,
@@ -136,10 +135,10 @@ function KanbanBoard() {
     // task over column
     else if (isOverColumn) {
       setTasks((prev) => {
-        const updatedTasks = [...prev];
         const activeIndex = prev.findIndex((task) => task.id === active.id);
         if (activeIndex === -1) return prev;
 
+        const updatedTasks = [...prev];
         updatedTasks[activeIndex] = {
           ...updatedTasks[activeIndex],
           columnId: over.id,
@@ -193,9 +192,7 @@ function KanbanBoard() {
                 )}
               />
             )}
-            {activeTask && (
-              <TaskCardOverlay key={activeTask.id} task={activeTask} />
-            )}
+            {activeTask && <TaskCardOverlay task={activeTask} />}
           </DragOverlay>
         }
       </DndContext>

@@ -1,36 +1,18 @@
 import React from "react";
 import { Column, Task } from "@/types";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import PlusIcon from "./plusIcon";
 import TrashIcon from "./trashIcon";
-import TaskCardOverlay from "./taskOverlay";
 
 interface ColumnContainerOverlayProps {
   column: Column;
   tasks: Task[];
 }
 
-function ColumnContainerOverlay(props: ColumnContainerOverlayProps) {
+export function ColumnContainerOverlay(props: ColumnContainerOverlayProps) {
   const { column, tasks } = props;
-  const { setNodeRef, transform, transition } = useSortable({
-    id: column.id,
-    data: {
-      type: "Column",
-      column,
-    },
-  });
-  const style = {
-    transition,
-    transform: CSS.Transform.toString(transform),
-  };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="bg-primary w-[350px] h-[600px] rounded-md flex flex-col"
-    >
+    <div className="bg-primary w-[350px] h-[600px] rounded-md flex flex-col">
       {/* Column Title */}
       <div className="bg-highlight h-[50px] min-h-[50px] flex items-center justify-between px-2 text-primary font-bold rounded-t-md">
         <div className="flex gap-2">
@@ -58,4 +40,12 @@ function ColumnContainerOverlay(props: ColumnContainerOverlayProps) {
   );
 }
 
-export default ColumnContainerOverlay;
+export function TaskCardOverlay({ task }: { task: Task }) {
+  return (
+    <div className="relative bg-white h-[100px] min-h-[100px] flex items-center p-2 text-left rounded hover:ring-1 hover:ring-inset hover:ring-highlight cursor-grab">
+      <p className="h-[90%] w-full my-auto overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
+        {task.content}
+      </p>
+    </div>
+  );
+}
