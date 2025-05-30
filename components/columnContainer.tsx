@@ -62,12 +62,12 @@ function ColumnContainer(props: ColumnContainerProps) {
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
       className="bg-primary w-[350px] h-[600px] rounded-md flex flex-col"
     >
       {/* Column Title */}
       <div
+        {...attributes}
+        {...listeners}
         onClick={() => setEditMode(true)}
         className="bg-highlight h-[50px] min-h-[50px] flex items-center justify-between px-2 text-primary font-bold rounded-t-md"
       >

@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import { Column, Id, Task } from "@/types";
 import PlusIcon from "./plusIcon";
 import {
+  closestCenter,
   DndContext,
   DragEndEvent,
   DragOverEvent,
@@ -114,7 +115,7 @@ function KanbanBoard() {
     const isActiveTask = active.data.current?.type === "Task";
     if (!isActiveTask) return;
     const isOverTask = over.data.current?.type === "Task";
-    const isOverColumn = over?.data.current?.type === "Column";
+    const isOverColumn = over.data.current?.type === "Column";
 
     // task over task
     if (isOverTask) {
@@ -153,6 +154,7 @@ function KanbanBoard() {
     <div className="m-auto flex min-h-screen w-full items-center overflow-x-auto overflow-y-hidden">
       <DndContext
         sensors={sensors}
+        collisionDetection={closestCenter}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
